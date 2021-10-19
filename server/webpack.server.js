@@ -1,6 +1,6 @@
 const path = require("path");
 
-modules.exports = {
+module.exports = {
     // inform webpack that we are building a bundle
     // for nodeJS, rather for the browser
     target: "node",
