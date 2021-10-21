@@ -13,8 +13,10 @@ app.get("*",(req,res)=>{
     const store = createStore();
 
     // some logic to init and load data into the store
-    // matchRoutes(Routes, req.path);
-    console.log(matchRoutes(Routes, req.path));
+    matchRoutes(Routes, req.path).map(({ route }) => {
+        return route.loadData ? route.loadData() : null;
+    });
+
 
     res.send(renderer(req, store));
 });
