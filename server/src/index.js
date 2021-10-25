@@ -9,6 +9,7 @@ import createStore from "./helpers/createStore";
 
 const app = express();
 
+// proxy api requests
 app.use(
     "/api",
     proxy("http://react-ssr-api.herokuapp.com", {
