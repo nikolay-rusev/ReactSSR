@@ -14,7 +14,7 @@ app.use(
     "/api",
     proxy("http://react-ssr-api.herokuapp.com", {
         proxyReqOptDecorator(opts) {
-            opts.header["x-forwarder-host"] = "me:3000";
+            opts.headers["x-forwarded-host"] = "me:3000";
             return opts;
         }
     }));
@@ -22,7 +22,7 @@ app.use(
 
 app.use(express.static("public"));
 app.get("*",(req,res)=>{
-    const store = createStore();
+    const store = createStore(req); // pass req to provide access to cookie
 
     // some logic to init and load data into the store
     // will return array of promises
