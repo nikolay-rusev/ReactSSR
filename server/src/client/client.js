@@ -11,6 +11,7 @@ import axios from "axios";
 import Routes from "./Routes";
 import reducers from "./reducers";
 
+// needed for api req (auth on server)
 const axiosInstance = axios.create({
     baseURL: "/api"
 })
