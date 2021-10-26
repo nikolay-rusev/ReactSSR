@@ -21,7 +21,7 @@ app.use(
 
 
 app.use(express.static("public"));
-app.get("*",(req,res)=>{
+app.get("*",(req,res) => {
     const store = createStore(req); // pass req to provide access to cookie
 
     // some logic to init and load data into the store
