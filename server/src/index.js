@@ -9,7 +9,7 @@ import createStore from "./helpers/createStore";
 
 const app = express();
 
-// proxy api requests for auth purposes
+// proxy api requests for auth purposes: auth handling
 app.use(
     "/api",
     proxy("http://react-ssr-api.herokuapp.com", {
@@ -30,6 +30,7 @@ app.get("*",(req,res) => {
         return route.loadData ? route.loadData(store) : null;
     });
 
+    // Need some way to detect when all initial data load action creators are completed on server
     // render when all data is retrieved
     Promise.all(promises).then(() => {
         res.send(renderer(req, store));
