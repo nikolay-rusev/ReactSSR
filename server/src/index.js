@@ -33,7 +33,12 @@ app.get("*",(req,res) => {
     // Need some way to detect when all initial data load action creators are completed on server
     // render when all data is retrieved
     Promise.all(promises).then(() => {
-        res.send(renderer(req, store));
+        const context = {};
+        const content = renderer(req, store, context);
+        if(context.notFound){
+            res.status(404);
+        }
+        res.send(content);
     });
 });
 
