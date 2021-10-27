@@ -35,10 +35,14 @@ app.get("*",(req,res) => {
     Promise.all(promises).then(() => {
         const context = {};
         const content = renderer(req, store, context);
-        if(context.notFound){
+
+        if(context.notFound) {
             res.status(404);
         }
+
         res.send(content);
+    }).catch(()=>{
+        res.send("Something went wrong!");
     });
 });
 
