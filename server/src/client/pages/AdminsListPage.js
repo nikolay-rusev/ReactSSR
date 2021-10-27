@@ -8,7 +8,7 @@ class AdminsListPage extends Component {
     }
 
     renderAdmins() {
-        return this.props.users.map(admin => {
+        return this.props.admins.map(admin => {
             return <li key={admin.id}>{admin.name}</li>;
         })
     }
