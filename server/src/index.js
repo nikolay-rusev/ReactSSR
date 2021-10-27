@@ -27,7 +27,7 @@ app.get("*",(req,res) => {
     // some logic to init and load data into the store
     // will return array of promises
     const promises = matchRoutes(Routes, req.path).map(({ route }) => {
-        return route.loadData ? route.loadData(store) : null;
+        return route.loadData ? route.loadData(store) : null; // null does not have loadData function
     });
 
     // Need some way to detect when all initial data load action creators are completed on server
