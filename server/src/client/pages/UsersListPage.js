@@ -41,7 +41,6 @@ function mapStateToProps(state) {
 }
 
 function loadData(store) {
-    // return promise
     return store.dispatch(fetchUsers());
 }
 
