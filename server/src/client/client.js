@@ -11,18 +11,14 @@ import axios from "axios";
 import Routes from "./Routes";
 import reducers from "./reducers";
 
-// needed for api req (auth handling on server)
+// needed for api req
 const axiosInstance = axios.create({
     baseURL: "/api"
 })
 
-// request to /api/users
-// axiosInstance.get("/users");
-
 // window.INITIAL_STATE: sync client/server state
 const store = createStore(reducers, window.INITIAL_STATE, applyMiddleware(thunk.withExtraArgument(axiosInstance)));
 
-// state rehydration on the browser
 ReactDOM.hydrate(
     <Provider store={store}>
         <BrowserRouter>

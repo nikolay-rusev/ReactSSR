@@ -3,14 +3,9 @@ import thunk from "redux-thunk";
 import axios from "axios";
 import reducers from "../client/reducers";
 
-export default (req) => {
-    // auth related code for passing the cookie: only needed for server
+export default () => {
     const axiosInstance = axios.create({
-        baseURL: "http://react-ssr-api.herokuapp.com",
-        // get original cookie and pass it or default ot empty
-        headers: {
-            cookie: req.get('cookie') || ""
-        }
+        baseURL: "http://react-ssr-api.herokuapp.com"
     });
 
     const store = createStore(reducers, {}, applyMiddleware(thunk.withExtraArgument(axiosInstance)));

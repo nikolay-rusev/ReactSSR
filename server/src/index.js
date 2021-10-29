@@ -9,7 +9,7 @@ import createStore from "./helpers/createStore";
 
 const app = express();
 
-// proxy api requests for auth purposes: auth handling
+// proxy api requests for server
 app.use(
     "/api",
     proxy("http://react-ssr-api.herokuapp.com", {
@@ -19,33 +19,21 @@ app.use(
         }
     }));
 
-
+// serve bundle.js for client
 app.use(express.static("public"));
+
 app.get("*",(req,res) => {
-    const store = createStore(req); // pass req to provide access to cookie
+    const store = createStore();
 
     // some logic to init and load data into the store
-    // will return array of promises
     const promises = matchRoutes(Routes, req.path).map(({ route }) => {
         return route.loadData ? route.loadData(store) : null; // null does not have loadData function
-    }).map(promise => {
-        if(promise) {
-            return new Promise((resolve, reject) => {
-                promise.then(resolve).catch(resolve);
-            })
-        }
     });
 
-    // Need some way to detect when all initial data load action creators are completed on server
     // render when all data is retrieved
     Promise.all(promises).then(() => {
         const context = {};
         const content = renderer(req, store, context);
-
-        // redirect on server
-        if(context.url) {
-            return res.redirect(301, context.url);
-        }
 
         if(context.notFound) {
             res.status(404);
